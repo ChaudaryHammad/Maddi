@@ -19,7 +19,7 @@ const Hero = () => {
     <>
       <div className="px-14 border-b border-neutral-900 pb-4 lg:mb-35 pt-40">
         <div className="flex flex-wrap">
-          <div className="w-full lg:w-1/2">
+          <div className="w-full lg:w-1/2 ">
             <div className="flex flex-col items-center lg:items-start">
               <motion.h1
                 variants={container(0)}
@@ -36,7 +36,7 @@ const Hero = () => {
                 className="bg-gradient-to-r from-pink-300 via-slate-500 to-purple-500 bg-clip-text text-[23px] lg:text-xl tracking-tight text-transparent lg:text-left text-center"
                 style={{ fontFamily: "Ubuntu Mono" }}
               >
-                Associate Software Engineer
+                .Net Core | Javascript Developer
               </motion.span>
               <motion.p
                 variants={container(1)}
@@ -74,8 +74,8 @@ const Hero = () => {
               </a>
             </div>
           </div>
-          <div className="w-full lg:w-1/2 ">
-            <div className="flex justify-center  ">
+          <div className="w-full lg:w-1/2">
+            <div className="flex justify-center lg:justify-end">
               <motion.div
                 initial={{ x: 100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}

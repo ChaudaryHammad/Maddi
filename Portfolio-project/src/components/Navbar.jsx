@@ -2,7 +2,7 @@ import { FaLinkedin, FaGithub, FaInstagram, FaKaggle } from "react-icons/fa";
 import ReactCountryFlag from "react-country-flag";
 const Navbar = () => {
   return (
-    <nav className="z-[9999] mb-20 flex items-center justify-between bg-transparent py-4 fixed w-full border-b border-gray-800 ">
+    <nav className="z-[9999] container mx-auto mb-20 flex items-center justify-between bg-transparent py-4 fixed w-full border-b border-gray-800 ">
       <div className="flex flex-shrink-0 items-center">
         <h1 className="underline decoration-wavy decoration-orange-400  text-2xl font-bold mx-4">
           <ReactCountryFlag
