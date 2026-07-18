@@ -5,7 +5,7 @@ export const personalInfo = {
   email: "hammad.node@gmail.com",
   location: "Pakistan",
   resumeUrl:
-    "https://drive.google.com/file/d/1UZ8BwmasqmoZXQQqCQCFn3d1A-JcqZG-/view?usp=sharing",
+    "https://drive.google.com/file/d/18UNz3pRb6CzakpLKmfPrTAHeZqL3O0jY/view?usp=sharing",
   /** GitHub profile avatar — swap for a local /images/ file anytime */
   avatar: "https://github.com/ChaudaryHammad.png",
   bannerLight: "",
