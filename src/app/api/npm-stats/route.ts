@@ -47,6 +47,7 @@ export async function GET(request: Request) {
       name: string;
       version: string;
       description?: string;
+      repository?: { url?: string };
     };
     const month = (await monthRes.json()) as NpmDownloads;
     const year = (await yearRes.json()) as NpmDownloads;
@@ -54,10 +55,7 @@ export async function GET(request: Request) {
 
     let stars: number | null = null;
     const repoUrl =
-      typeof (meta as { repository?: { url?: string } }).repository?.url ===
-      "string"
-        ? (meta as { repository: { url: string } }).repository.url
-        : null;
+      typeof meta.repository?.url === "string" ? meta.repository.url : null;
 
     const githubMatch = repoUrl?.match(/github\.com[/:]([^/]+\/[^/.]+)/i);
     if (githubMatch) {
