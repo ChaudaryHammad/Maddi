@@ -11,7 +11,9 @@ type PinnedRepoNode = {
   stargazerCount: number;
   forkCount: number;
   primaryLanguage: { name: string; color: string | null } | null;
-  languages: { nodes: { name: string }[] };
+  repositoryTopics: {
+    nodes: { topic: { name: string } }[];
+  };
 };
 
 type GraphQLResponse = {
@@ -28,27 +30,33 @@ type GraphQLResponse = {
   errors?: { message: string }[];
 };
 
+const REPO_FIELDS = `
+  name
+  description
+  url
+  homepageUrl
+  stargazerCount
+  forkCount
+  primaryLanguage {
+    name
+    color
+  }
+  repositoryTopics(first: 10) {
+    nodes {
+      topic {
+        name
+      }
+    }
+  }
+`;
+
 const QUERY = `
   query($login: String!) {
     user(login: $login) {
       pinnedItems(first: 6, types: REPOSITORY) {
         nodes {
           ... on Repository {
-            name
-            description
-            url
-            homepageUrl
-            stargazerCount
-            forkCount
-            primaryLanguage {
-              name
-              color
-            }
-            languages(first: 5, orderBy: { field: SIZE, direction: DESC }) {
-              nodes {
-                name
-              }
-            }
+            ${REPO_FIELDS}
           }
         }
       }
@@ -59,21 +67,7 @@ const QUERY = `
         orderBy: { field: UPDATED_AT, direction: DESC }
       ) {
         nodes {
-          name
-          description
-          url
-          homepageUrl
-          stargazerCount
-          forkCount
-          primaryLanguage {
-            name
-            color
-          }
-          languages(first: 5, orderBy: { field: SIZE, direction: DESC }) {
-            nodes {
-              name
-            }
-          }
+          ${REPO_FIELDS}
         }
       }
     }
@@ -91,20 +85,17 @@ const GRADIENTS = [
 
 function mapRepo(repo: PinnedRepoNode, index: number) {
   const override = projectOverrides[repo.name.toLowerCase()];
+  const topics = repo.repositoryTopics.nodes.map((n) => n.topic.name);
   const technologies =
-    override?.technologies ??
-    (repo.languages.nodes.length > 0
-      ? repo.languages.nodes.map((l) => l.name)
+    topics.length > 0
+      ? topics
       : repo.primaryLanguage
         ? [repo.primaryLanguage.name]
-        : []);
+        : [];
 
   return {
     title: override?.title ?? repo.name,
-    description:
-      override?.description ??
-      repo.description?.trim() ??
-      "No description provided.",
+    description: repo.description?.trim() || "No description provided.",
     technologies,
     githubUrl: repo.url,
     liveUrl: override?.liveUrl ?? repo.homepageUrl ?? undefined,

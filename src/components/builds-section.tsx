@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowUpRight, ExternalLink } from "lucide-react";
+import { ArrowUpRight, Check, Copy, ExternalLink } from "lucide-react";
 import { builds, type BuildProduct } from "@/data/portfolio";
 
 type NpmStats = {
@@ -60,6 +60,8 @@ function StatBox({
 function TrueCoordCard({ product }: { product: BuildProduct }) {
   const [stats, setStats] = useState<NpmStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [copied, setCopied] = useState(false);
+  const installCmd = `npm i ${product.npmPackage}`;
 
   useEffect(() => {
     if (!product.npmPackage) return;
@@ -89,6 +91,16 @@ function TrueCoordCard({ product }: { product: BuildProduct }) {
     };
   }, [product.npmPackage]);
 
+  async function copyInstall() {
+    try {
+      await navigator.clipboard.writeText(installCmd);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1500);
+    } catch {
+      // clipboard unavailable
+    }
+  }
+
   return (
     <article className="npm-card relative overflow-hidden flex flex-col h-full p-5 sm:p-6">
       {/* npm brand wash */}
@@ -115,9 +127,24 @@ function TrueCoordCard({ product }: { product: BuildProduct }) {
         {product.description}
       </p>
 
-      <div className="relative z-10 npm-install mb-5">
-        <span className="text-[#CB3837]">$</span>
-        <code className="ml-2">npm i {product.npmPackage}</code>
+      <div className="relative z-10 npm-install mb-5 flex items-center justify-between gap-3">
+        <div className="min-w-0 truncate">
+          <span className="text-[#CB3837]">$</span>
+          <code className="ml-2">{installCmd}</code>
+        </div>
+        <button
+          type="button"
+          onClick={copyInstall}
+          className="npm-icon-btn shrink-0"
+          aria-label={copied ? "Copied" : "Copy install command"}
+          title={copied ? "Copied" : "Copy"}
+        >
+          {copied ? (
+            <Check className="w-3.5 h-3.5" />
+          ) : (
+            <Copy className="w-3.5 h-3.5" />
+          )}
+        </button>
       </div>
 
       <div className="relative z-10 grid grid-cols-3 gap-3 mb-5 py-4 border-y border-white/10">

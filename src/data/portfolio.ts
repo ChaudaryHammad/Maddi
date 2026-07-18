@@ -106,10 +106,6 @@ export const builds: BuildProduct[] = [
     githubRepo: "ChaudaryHammad/true-coord",
     links: [
       { label: "npm", url: "https://www.npmjs.com/package/true-coord" },
-      {
-        label: "GitHub",
-        url: "https://github.com/ChaudaryHammad/true-coord",
-      },
     ],
   },
   {
@@ -127,39 +123,28 @@ export const builds: BuildProduct[] = [
 ];
 
 /**
- * Richer copy for known repos (overrides GitHub description when present).
+ * Optional display tweaks only (title / live URL).
+ * Description and tech stack always come from GitHub.
  * Keys are case-insensitive repo names.
  */
 export const projectOverrides: Record<
   string,
-  { title?: string; description?: string; technologies?: string[]; liveUrl?: string }
+  { title?: string; liveUrl?: string }
 > = {
   autoessentials: {
     title: "AutoEssentials — FYP",
-    description:
-      "Multi-vendor e-commerce platform connecting car owners with premium auto parts, plus real-time CNN-based inspection tools for safety and maintenance.",
-    technologies: ["React", "Node.js", "MongoDB", "Express.js"],
     liveUrl: "https://autoessentials.vercel.app/",
   },
   runo: {
     title: "Runo",
-    description:
-      "Full-stack blogging app with authentication, commenting, and post categorization.",
-    technologies: ["HTML", "CSS", "Angular", "Firebase"],
     liveUrl: "https://runo-nine.vercel.app",
   },
   passsense: {
     title: "PassSense",
-    description:
-      "Password / credentials companion built with React — focused on a clean, practical UX.",
-    technologies: ["HTML", "CSS", "React", "Bootstrap"],
     liveUrl: "https://pass-sense.vercel.app",
   },
   "expense-tracking-app": {
     title: "Expense Tracking App",
-    description:
-      "Track expenses and manage finances with a React + GraphQL stack.",
-    technologies: ["React", "GraphQL", "Tailwind CSS"],
   },
 };
 
