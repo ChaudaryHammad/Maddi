@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import { ActivityCalendar } from "react-activity-calendar";
 import { personalInfo } from "@/data/portfolio";
@@ -33,6 +33,7 @@ export function GitHubActivity() {
   const [data, setData] = useState<Activity[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -78,6 +79,26 @@ export function GitHubActivity() {
       cancelled = true;
     };
   }, []);
+
+  // Scroll to the right so the current month is in view
+  useEffect(() => {
+    if (!data || !scrollRef.current) return;
+
+    const el = scrollRef.current;
+    const scrollToCurrent = () => {
+      el.scrollLeft = el.scrollWidth - el.clientWidth;
+    };
+
+    scrollToCurrent();
+    // Re-run after layout/paint in case the calendar finishes sizing later
+    const id = requestAnimationFrame(scrollToCurrent);
+    const t = window.setTimeout(scrollToCurrent, 50);
+
+    return () => {
+      cancelAnimationFrame(id);
+      window.clearTimeout(t);
+    };
+  }, [data, mounted]);
 
   return (
     <>
@@ -146,12 +167,13 @@ export function GitHubActivity() {
         <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-[var(--fg-muted)]" />
         <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-[var(--fg-muted)]" />
 
-        <div className="overflow-x-auto hide-scrollbar">
+        <div ref={scrollRef} className="overflow-x-auto hide-scrollbar">
           <div className="min-w-[750px] px-2">
             {mounted && data && (
               <ActivityCalendar
                 data={data}
                 colorScheme={theme === "light" ? "light" : "dark"}
+                showTotalCount={false}
                 theme={{
                   dark: [
                     "rgba(255,255,255,0.1)",
@@ -192,10 +214,7 @@ export function GitHubActivity() {
         className="flex justify-between items-center mt-6 text-xs n-mono"
         style={{ color: "var(--fg-muted)" }}
       >
-        <div className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full border border-[var(--fg-muted)]" />
-          @{username}
-        </div>
+        <div>@{username}</div>
         <div className="uppercase">Last 12 Months · GitHub API</div>
       </div>
     </>

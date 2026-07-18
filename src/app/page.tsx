@@ -397,7 +397,7 @@ export default function Home() {
             <div className="x-line my-4" />
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
-              <div>
+              <div className="order-2 lg:order-1">
                 <span className="coord-label block mb-4">CHANNELS</span>
                 <div>
                   {socials.map((s) => {
@@ -443,7 +443,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div>
+              <div className="order-1 lg:order-2">
                 <span className="coord-label block mb-4">DIRECT MESSAGE</span>
                 <ContactForm />
               </div>

@@ -27,7 +27,7 @@ export const socials = [
   },
   {
     name: "X",
-    url: "https://x.com/",
+    url: "https://x.com/hammad_node",
     icon: "twitter",
   },
   {

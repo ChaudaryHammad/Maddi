@@ -22,6 +22,25 @@ export function ContactForm() {
 
     const form = e.currentTarget;
     const data = new FormData(form);
+    const name = String(data.get("name") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const message = String(data.get("message") ?? "").trim();
+
+    if (!name || !email || !message) {
+      setStatus("error");
+      setErrorMessage("Please fill in name, email, and message.");
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setStatus("error");
+      setErrorMessage("Please enter a valid email address.");
+      return;
+    }
+
+    data.set("name", name);
+    data.set("email", email);
+    data.set("message", message);
 
     setStatus("submitting");
     setErrorMessage(null);
@@ -76,7 +95,7 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <label className="n-field">
           <span className="n-field-label">
