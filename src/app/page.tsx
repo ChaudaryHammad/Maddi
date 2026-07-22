@@ -272,7 +272,7 @@ export default function Home() {
           </section>
         </FadeIn>
 
-        {/* ===== BUILDS (true-coord + LoopNode) ===== */}
+        {/* ===== BUILDS (true-coord + Health Mesh) ===== */}
         <FadeIn index={2}>
           <BuildsSection />
         </FadeIn>

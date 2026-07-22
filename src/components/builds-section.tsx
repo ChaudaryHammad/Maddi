@@ -201,23 +201,36 @@ function TrueCoordCard({ product }: { product: BuildProduct }) {
   );
 }
 
-function LoopNodeCard({ product }: { product: BuildProduct }) {
-  const live = product.links[0]?.url;
+function HealthMeshCard({ product }: { product: BuildProduct }) {
+  const live = product.links.find((l) => l.label.toLowerCase() === "live")?.url
+    ?? product.links[0]?.url;
 
   const scores = [
-    { label: "Perf", value: "98" },
+    { label: "Uptime", value: "99.9" },
     { label: "A11y", value: "100" },
-    { label: "SEO", value: "92" },
-    { label: "Security", value: "100" },
+    { label: "SSL", value: "100" },
+    { label: "Perf", value: "98" },
   ];
 
   return (
     <article className="n-card-inner p-5 sm:p-6 flex flex-col h-full">
       <div className="flex items-start justify-between gap-3 mb-4">
-        <div>
-          <h3 className="n-heading text-base sm:text-lg">{product.name}</h3>
+        <div className="flex items-center gap-3 min-w-0">
+          {product.logo && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={product.logo}
+              alt=""
+              width={36}
+              height={36}
+              className="shrink-0 rounded-lg"
+            />
+          )}
+          <div className="min-w-0">
+            <h3 className="n-heading text-base sm:text-lg">{product.name}</h3>
+          </div>
         </div>
-        <span className="inline-flex items-center gap-1.5 n-tag">
+        <span className="inline-flex items-center gap-1.5 n-tag shrink-0">
           <span className="status-indicator !w-1.5 !h-1.5" aria-hidden />
           LIVE
         </span>
@@ -270,7 +283,7 @@ function LoopNodeCard({ product }: { product: BuildProduct }) {
 
 export function BuildsSection() {
   const trueCoord = builds.find((b) => b.id === "true-coord");
-  const loopNode = builds.find((b) => b.id === "loopnode");
+  const healthMesh = builds.find((b) => b.id === "healthmesh");
 
   return (
     <section className="x-row py-10 px-5 sm:py-16 sm:px-7">
@@ -291,7 +304,7 @@ export function BuildsSection() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {trueCoord && <TrueCoordCard product={trueCoord} />}
-        {loopNode && <LoopNodeCard product={loopNode} />}
+        {healthMesh && <HealthMeshCard product={healthMesh} />}
       </div>
     </section>
   );

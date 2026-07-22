@@ -30,7 +30,7 @@ export default function RootLayout({
         />
         <meta
           name="keywords"
-          content="Muhammad Hammad, Software Engineer, Product Builder, Full Stack, React, React Native, .NET, true-coord, LoopNode"
+          content="Muhammad Hammad, Software Engineer, Product Builder, Full Stack, React, React Native, .NET, true-coord, Health Mesh"
         />
         <meta name="author" content="Muhammad Hammad" />
         <meta name="robots" content="index, follow" />

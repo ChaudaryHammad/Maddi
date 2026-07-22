@@ -88,6 +88,8 @@ export type BuildProduct = {
   description: string;
   tags: string[];
   links: { label: string; url: string }[];
+  /** Optional product mark / logo path under /public */
+  logo?: string;
   /** npm package name — enables live download stats */
   npmPackage?: string;
   githubRepo?: string;
@@ -109,15 +111,21 @@ export const builds: BuildProduct[] = [
     ],
   },
   {
-    id: "loopnode",
+    id: "healthmesh",
     kind: "product",
-    name: "LoopNode",
+    name: "Health Mesh",
     label: "SAAS",
     description:
-      "Website health command center — Lighthouse performance, axe-core accessibility, SEO, and security audits in one dashboard so you catch issues before users do.",
-    tags: ["SaaS", "Audits", "Performance", "A11y"],
+      "Continuous monitoring for downtime, accessibility, SSL, and production health — so your product stays up and usable for everyone.",
+    tags: ["SaaS", "Uptime", "A11y", "SSL", "Performance"],
+    logo: "/images/healthmesh-mark.svg",
+    githubRepo: "ChaudaryHammad/healthmesh",
     links: [
-      { label: "Live", url: "https://loopnode.vercel.app" },
+      { label: "Live", url: "https://gethealthmesh.site" },
+      {
+        label: "GitHub",
+        url: "https://github.com/ChaudaryHammad/healthmesh",
+      },
     ],
   },
 ];
